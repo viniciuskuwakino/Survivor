@@ -17,5 +17,10 @@ hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2, 1)
-scale = Vector2(1.20014, 1.0649)
+scale = Vector2(0.51202, 0.641884)
 shape = SubResource("CapsuleShape2D_nmnse")
+
+[node name="WalkTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.258
+one_shot = true
