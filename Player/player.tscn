@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dckjkwrd6jt0g"]
+[gd_scene load_steps=7 format=3 uid="uid://dckjkwrd6jt0g"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_ro6e4"]
 [ext_resource type="Texture2D" uid="uid://bhtq0f2phaumr" path="res://Textures/Player/player_sprite.png" id="1_wtrva"]
@@ -7,6 +7,8 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nmnse"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c2wrk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vgl1s"]
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 motion_mode = 1
@@ -37,6 +39,30 @@ position = Vector2(2, 1)
 scale = Vector2(0.533771, 0.989345)
 shape = SubResource("RectangleShape2D_c2wrk")
 
+[node name="Attack" type="Node2D" parent="."]
+scale = Vector2(0.996, 1)
+
+[node name="Spell1Timer" type="Timer" parent="Attack"]
+unique_name_in_owner = true
+wait_time = 1.5
+
+[node name="Spell1AttackTimer" type="Timer" parent="Attack/Spell1Timer"]
+unique_name_in_owner = true
+wait_time = 0.075
+
+[node name="EnemyDetectionArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetectionArea"]
+scale = Vector2(-39.1773, 32.7742)
+shape = SubResource("CircleShape2D_vgl1s")
+
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
+[connection signal="timeout" from="Attack/Spell1Timer" to="." method="_on_spell_1_timer_timeout"]
+[connection signal="timeout" from="Attack/Spell1Timer/Spell1AttackTimer" to="." method="_on_spell_1_attack_timer_timeout"]
+[connection signal="body_entered" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_entered"]
+[connection signal="body_exited" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_exited"]
 
 [editable path="Hurtbox"]
