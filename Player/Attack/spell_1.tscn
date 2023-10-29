@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://numvxv6byvcu"]
 
 [ext_resource type="Script" path="res://Player/Attack/spell_1.gd" id="1_curhv"]
-[ext_resource type="Texture2D" uid="uid://ccuanlx7nmnh1" path="res://Ground/spell1.png" id="1_ohmpw"]
+[ext_resource type="Texture2D" uid="uid://dgchskfarcwfi" path="res://Ground/fireball.png" id="2_ovuo2"]
 [ext_resource type="AudioStream" uid="uid://cjkjga2u8bjtc" path="res://Audio/SoundEffect/Laser.wav" id="3_le80h"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pm4wq"]
@@ -14,7 +14,7 @@ collision_mask = 0
 script = ExtResource("1_curhv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_ohmpw")
+texture = ExtResource("2_ovuo2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-6, -6)

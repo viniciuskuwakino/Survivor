@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://doej6r03tkupv"]
+[gd_scene load_steps=9 format=3 uid="uid://doej6r03tkupv"]
 
+[ext_resource type="Script" path="res://world.gd" id="1_eci8w"]
 [ext_resource type="Texture2D" uid="uid://dct1rcbl7brpc" path="res://Ground/solo4.png" id="1_ng2fe"]
 [ext_resource type="PackedScene" uid="uid://dckjkwrd6jt0g" path="res://Player/player.tscn" id="2_3apor"]
 [ext_resource type="PackedScene" uid="uid://cpgmjuqbrwjbd" path="res://Utils/spawner.tscn" id="3_6hyga"]
@@ -19,10 +20,11 @@ script = ExtResource("5_mbhe4")
 time_start = 5
 time_end = 30
 enemy = ExtResource("3_rtjf3")
-enemy_num = 3
+enemy_num = 10
 enemy_spawn_delay = 0
 
 [node name="World" type="Node2D"]
+script = ExtResource("1_eci8w")
 
 [node name="Ground" type="Sprite2D" parent="."]
 texture_filter = 1

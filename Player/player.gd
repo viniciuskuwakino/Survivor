@@ -13,7 +13,7 @@ var spell1 = preload("res://Player/Attack/spell_1.tscn")
 
 # Spell 1
 var spell1_ammo = 0
-var spell1_baseammo = 1
+var spell1_baseammo = 9
 var spell1_attackspeed = 1.5
 var spell1_level = 1
 
@@ -62,7 +62,7 @@ func attack():
 			spell1Timer.start()
 
 
-func _on_hurtbox_hurt(damage):
+func _on_hurtbox_hurt(damage, _angle, _knockback):
 	hp -= damage
 	print(hp)
 
