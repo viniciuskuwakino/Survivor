@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://bvxtvgy2ooimi"]
 
 [ext_resource type="Script" path="res://Inimigos/inimigo_1.gd" id="1_ndilt"]
-[ext_resource type="Texture2D" uid="uid://b8xgcfdtncspr" path="res://Textures/Enemy/kolbold_weak.png" id="1_pj8md"]
+[ext_resource type="Texture2D" uid="uid://ejnpuoocespr" path="res://Textures/Enemy/skeleton.png" id="2_oajva"]
 [ext_resource type="PackedScene" uid="uid://bmajb0mrun3ab" path="res://Utils/hurtbox.tscn" id="3_yyemb"]
 [ext_resource type="PackedScene" uid="uid://dvx1q17bidodx" path="res://Utils/hitbox.tscn" id="4_bp2nk"]
 [ext_resource type="AudioStream" uid="uid://fbc8m0r7yk53" path="res://Audio/SoundEffect/Enemy_Damage.wav" id="5_npiw4"]
@@ -59,7 +59,7 @@ motion_mode = 1
 script = ExtResource("1_ndilt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_pj8md")
+texture = ExtResource("2_oajva")
 hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

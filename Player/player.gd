@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var move_speed = 40.0
+var move_speed = 60.0
 var hp = 5
 
 
