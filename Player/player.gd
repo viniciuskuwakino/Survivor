@@ -2,20 +2,29 @@ extends CharacterBody2D
 
 var move_speed = 60.0
 var hp = 5
-
+var last_movement = Vector2.UP
 
 # Ataques
 var spell1 = preload("res://Player/Attack/spell_1.tscn")
+var leaf = preload("res://Player/Attack/leaf_spell.tscn")
 
 # AtaqueNodes
 @onready var spell1Timer = get_node("%Spell1Timer")
 @onready var spell1AttackTimer = get_node("%Spell1AttackTimer")
+@onready var leafTimer = get_node("%LeafTimer")
+@onready var leafAttackTimer = get_node("%LeafAttackTimer")
 
 # Spell 1
 var spell1_ammo = 0
 var spell1_baseammo = 9
 var spell1_attackspeed = 1.5
-var spell1_level = 1
+var spell1_level = 0
+
+# Leaf Spell
+var leaf_ammo = 0
+var leaf_baseammo = 5
+var leaf_attackspeed = 3
+var leaf_level = 1
 
 # Alvo na mira
 var enemy_close = []
@@ -42,6 +51,7 @@ func move():
 		sprite.flip_h = false
 	
 	if mov != Vector2.ZERO:
+		last_movement = mov
 		if walkTimer.is_stopped():
 			if sprite.frame >= sprite.hframes - 1:
 				sprite.frame = 0
@@ -60,6 +70,11 @@ func attack():
 		spell1Timer.wait_time = spell1_attackspeed
 		if spell1Timer.is_stopped():
 			spell1Timer.start()
+	
+	if leaf_level > 0:
+		leafTimer.wait_time = leaf_attackspeed
+		if leafTimer.is_stopped():
+			leafTimer.start()
 
 
 func _on_hurtbox_hurt(damage, _angle, _knockback):
@@ -85,6 +100,26 @@ func _on_spell_1_attack_timer_timeout():
 		else:
 			spell1AttackTimer.stop()
 
+
+func _on_leaf_timer_timeout():
+	leaf_ammo += leaf_baseammo
+	leafAttackTimer.start()
+
+
+func _on_leaf_attack_timer_timeout():
+	if leaf_ammo > 0:
+		var leaf_attack = leaf.instantiate()
+		leaf_attack.position = position
+		leaf_attack.last_movement = last_movement
+		leaf_attack.level = leaf_level
+		add_child(leaf_attack)
+		leaf_ammo -= 1
+		if leaf_ammo > 0:
+			leafAttackTimer.start()
+		else:
+			leafAttackTimer.stop()
+
+
 func get_random_target():
 	if enemy_close.size() > 0:
 		return enemy_close.pick_random().global_position
@@ -99,3 +134,5 @@ func _on_enemy_detection_area_body_entered(body):
 func _on_enemy_detection_area_body_exited(body):
 	if enemy_close.has(body):
 		enemy_close.erase(body)
+
+

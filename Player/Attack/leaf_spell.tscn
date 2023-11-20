@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://wa3ay56v77wu"]
+
+[ext_resource type="Script" path="res://Player/Attack/leaf_spell.gd" id="1_htjqd"]
+[ext_resource type="Texture2D" uid="uid://bcw37bfabnrd8" path="res://Ground/nature.png" id="2_at85q"]
+[ext_resource type="AudioStream" uid="uid://w52l3ic2fe5u" path="res://Audio/SoundEffect/Shore.mp3" id="3_a0ava"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pcfce"]
+size = Vector2(33, 22)
+
+[node name="LeafSpell" type="Area2D" groups=["attack"]]
+top_level = true
+scale = Vector2(0.1, 0.1)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_htjqd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0.5, 0)
+rotation = -1.78537
+scale = Vector2(0.852181, 0.889154)
+texture = ExtResource("2_at85q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.658014, 0.920891)
+shape = SubResource("RectangleShape2D_pcfce")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="snd_attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_a0ava")
+volume_db = -17.741
+pitch_scale = 4.0
+autoplay = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
