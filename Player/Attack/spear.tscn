@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvt46jpbf666q"]
+
+[ext_resource type="Script" path="res://Player/Attack/spear.gd" id="1_8u3oy"]
+[ext_resource type="Texture2D" uid="uid://dolmg3puimlmq" path="res://Ground/spear.png" id="1_i4cvx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cfck8"]
+
+[node name="Spear" type="Area2D"]
+script = ExtResource("1_8u3oy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_i4cvx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -0.785398
+scale = Vector2(0.222659, 2.01698)
+shape = SubResource("RectangleShape2D_cfck8")
+disabled = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="ChangeDirection" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="ResetPosTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="snd_attack" type="AudioStreamPlayer2D" parent="."]

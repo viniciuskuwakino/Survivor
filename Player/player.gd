@@ -7,12 +7,14 @@ var last_movement = Vector2.UP
 # Ataques
 var spell1 = preload("res://Player/Attack/spell_1.tscn")
 var leaf = preload("res://Player/Attack/leaf_spell.tscn")
+var spear = preload("res://Player/Attack/spear.tscn")
 
 # AtaqueNodes
 @onready var spell1Timer = get_node("%Spell1Timer")
 @onready var spell1AttackTimer = get_node("%Spell1AttackTimer")
 @onready var leafTimer = get_node("%LeafTimer")
 @onready var leafAttackTimer = get_node("%LeafAttackTimer")
+@onready var spearBase = get_node("%SpearBase")
 
 # Spell 1
 var spell1_ammo = 0
@@ -25,6 +27,10 @@ var leaf_ammo = 0
 var leaf_baseammo = 5
 var leaf_attackspeed = 3
 var leaf_level = 1
+
+# Spear
+var spear_ammo = 1
+var spear_level = 1
 
 # Alvo na mira
 var enemy_close = []
@@ -75,6 +81,9 @@ func attack():
 		leafTimer.wait_time = leaf_attackspeed
 		if leafTimer.is_stopped():
 			leafTimer.start()
+	
+	if spear_level > 0:
+		spawn_spear()
 
 
 func _on_hurtbox_hurt(damage, _angle, _knockback):
@@ -119,6 +128,15 @@ func _on_leaf_attack_timer_timeout():
 		else:
 			leafAttackTimer.stop()
 
+func spawn_spear():
+	var get_spear_total = spearBase.get_child_count()
+	var calc_spawns = spear_ammo - get_spear_total
+	while calc_spawns > 0:
+		var spear_spawn = spear.instantiate()
+		spear_spawn.global_position = global_position
+		spearBase.add_child(spear_spawn)
+		calc_spawns -= 1
+		# 10:45
 
 func get_random_target():
 	if enemy_close.size() > 0:
