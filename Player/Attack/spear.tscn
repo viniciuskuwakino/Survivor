@@ -1,11 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://cvt46jpbf666q"]
+[gd_scene load_steps=5 format=3 uid="uid://cvt46jpbf666q"]
 
 [ext_resource type="Script" path="res://Player/Attack/spear.gd" id="1_8u3oy"]
 [ext_resource type="Texture2D" uid="uid://dolmg3puimlmq" path="res://Ground/spear.png" id="1_i4cvx"]
+[ext_resource type="AudioStream" uid="uid://cxuyqsfrn7031" path="res://Audio/SoundEffect/spear.mp3" id="3_ngs3l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cfck8"]
 
-[node name="Spear" type="Area2D"]
+[node name="Spear" type="Area2D" groups=["attack"]]
+top_level = true
+collision_layer = 4
+collision_mask = 0
 script = ExtResource("1_8u3oy")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -19,11 +23,23 @@ disabled = true
 
 [node name="AttackTimer" type="Timer" parent="."]
 unique_name_in_owner = true
+wait_time = 4.0
+one_shot = true
+autostart = true
 
 [node name="ChangeDirection" type="Timer" parent="."]
 unique_name_in_owner = true
 
 [node name="ResetPosTimer" type="Timer" parent="."]
 unique_name_in_owner = true
+wait_time = 3.0
+autostart = true
 
 [node name="snd_attack" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_ngs3l")
+volume_db = -33.697
+pitch_scale = 0.77
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="ChangeDirection" to="." method="_on_change_direction_timeout"]
+[connection signal="timeout" from="ResetPosTimer" to="." method="_on_reset_pos_timer_timeout"]

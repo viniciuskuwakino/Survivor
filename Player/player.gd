@@ -18,7 +18,7 @@ var spear = preload("res://Player/Attack/spear.tscn")
 
 # Spell 1
 var spell1_ammo = 0
-var spell1_baseammo = 9
+var spell1_baseammo = 1
 var spell1_attackspeed = 1.5
 var spell1_level = 0
 
@@ -26,7 +26,7 @@ var spell1_level = 0
 var leaf_ammo = 0
 var leaf_baseammo = 5
 var leaf_attackspeed = 3
-var leaf_level = 1
+var leaf_level = 0
 
 # Spear
 var spear_ammo = 1
@@ -136,7 +136,6 @@ func spawn_spear():
 		spear_spawn.global_position = global_position
 		spearBase.add_child(spear_spawn)
 		calc_spawns -= 1
-		# 10:45
 
 func get_random_target():
 	if enemy_close.size() > 0:
