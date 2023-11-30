@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://doej6r03tkupv"]
+[gd_scene load_steps=10 format=3 uid="uid://doej6r03tkupv"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_eci8w"]
 [ext_resource type="Texture2D" uid="uid://dct1rcbl7brpc" path="res://Ground/solo4.png" id="1_ng2fe"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cpgmjuqbrwjbd" path="res://Utils/spawner.tscn" id="3_6hyga"]
 [ext_resource type="PackedScene" uid="uid://bvxtvgy2ooimi" path="res://Inimigos/inimigo_1.tscn" id="3_rtjf3"]
 [ext_resource type="Script" path="res://Utils/spawn_info.gd" id="5_mbhe4"]
+[ext_resource type="PackedScene" uid="uid://bal7oq10747e8" path="res://Objects/experience_gem.tscn" id="7_bn2sc"]
 
 [sub_resource type="Resource" id="Resource_qphsu"]
 script = ExtResource("5_mbhe4")
@@ -39,3 +40,7 @@ region_rect = Rect2(-4000, -4000, 4000, 4000)
 spawns = Array[ExtResource("5_mbhe4")]([SubResource("Resource_qphsu"), SubResource("Resource_ubsdg")])
 
 [node name="Loot" type="Node2D" parent="." groups=["loot"]]
+
+[node name="ExperienceGem" parent="Loot" instance=ExtResource("7_bn2sc")]
+position = Vector2(87, -40)
+experience = 50

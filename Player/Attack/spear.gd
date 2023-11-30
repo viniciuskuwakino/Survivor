@@ -41,6 +41,30 @@ func update_spear():
 			speed = 200.0
 			damage = 10
 			knockback_amount = 100
+			paths = 1
+			attack_size = 1.0
+			attack_speed = 4.0
+		2:
+			hp = 9999
+			speed = 200.0
+			damage = 10
+			knockback_amount = 100
+			paths = 2
+			attack_size = 1.0
+			attack_speed = 4.0
+		3:
+			hp = 9999
+			speed = 200.0
+			damage = 10
+			knockback_amount = 100
+			paths = 3
+			attack_size = 1.0
+			attack_speed = 4.0
+		4:
+			hp = 9999
+			speed = 200.0
+			damage = 15
+			knockback_amount = 130
 			paths = 3
 			attack_size = 1.0
 			attack_speed = 4.0

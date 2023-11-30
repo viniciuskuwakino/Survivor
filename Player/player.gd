@@ -1,7 +1,8 @@
 extends CharacterBody2D
 
 var move_speed = 60.0
-var hp = 5
+var hp = 30
+var maxhp = 30
 var last_movement = Vector2.UP
 
 var experience = 0
@@ -20,21 +21,28 @@ var spear = preload("res://Player/Attack/spear.tscn")
 @onready var leafAttackTimer = get_node("%LeafAttackTimer")
 @onready var spearBase = get_node("%SpearBase")
 
+# Upgrades
+var collected_upgrades = []
+var upgrade_options = []
+var speed = 0
+var additional_attacks = 0
+var spell_cooldown = 0
+
 # Spell 1
-var spell1_ammo = 1
-var spell1_baseammo = 10
+var spell1_ammo = 0
+var spell1_baseammo = 0
 var spell1_attackspeed = 1.5
-var spell1_level = 1
+var spell1_level = 0
 
 # Leaf Spell
 var leaf_ammo = 0
-var leaf_baseammo = 5
+var leaf_baseammo = 0
 var leaf_attackspeed = 3
 var leaf_level = 0
 
 # Spear
 var spear_ammo = 0
-var spear_level = 1
+var spear_level = 0
 
 # Alvo na mira
 var enemy_close = []
@@ -53,6 +61,7 @@ var enemy_close = []
 
 
 func _ready():
+	upgrade_character("spell_1_1")
 	attack()
 	set_expbar(experience, calculate_experiencecap())
 
@@ -106,7 +115,7 @@ func _on_hurtbox_hurt(damage, _angle, _knockback):
 
 
 func _on_spell_1_timer_timeout():
-	spell1_ammo += spell1_baseammo
+	spell1_ammo += spell1_baseammo + additional_attacks
 	spell1AttackTimer.start()
 
 
@@ -125,7 +134,7 @@ func _on_spell_1_attack_timer_timeout():
 
 
 func _on_leaf_timer_timeout():
-	leaf_ammo += leaf_baseammo
+	leaf_ammo += leaf_baseammo + additional_attacks
 	leafAttackTimer.start()
 
 
@@ -144,12 +153,17 @@ func _on_leaf_attack_timer_timeout():
 
 func spawn_spear():
 	var get_spear_total = spearBase.get_child_count()
-	var calc_spawns = spear_ammo - get_spear_total
+	var calc_spawns = (spear_ammo + additional_attacks) - get_spear_total
 	while calc_spawns > 0:
 		var spear_spawn = spear.instantiate()
 		spear_spawn.global_position = global_position
 		spearBase.add_child(spear_spawn)
 		calc_spawns -= 1
+	
+	var get_spears = spearBase.get_children()
+	for i in get_spears:
+		if i.has_method("update_spear"):
+			i.update_spear()
 
 func get_random_target():
 	if enemy_close.size() > 0:
@@ -223,18 +237,89 @@ func levelup():
 	var optionsmax = 3
 	while options < optionsmax:
 		var option_choice = itemOptions.instantiate()
+		option_choice.item= get_random_item()
 		upgradeOptions.add_child(option_choice)
 		options += 1
 
 	get_tree().paused = true
 
 func upgrade_character(upgrade):
+	match upgrade:
+		"spell_1_1":
+			spell1_level = 1
+			spell1_baseammo += 1
+		"spell_1_2":
+			spell1_level = 2
+			spell1_baseammo += 1
+		"spell_1_3":
+			spell1_level = 3
+			spell1_baseammo += 1
+		"spell_1_4":
+			spell1_level = 4
+			spell1_baseammo += 2
+		"leaf_spell_1":
+			leaf_level = 1
+			leaf_baseammo += 1
+		"leaf_spell_2":
+			leaf_level = 2
+			leaf_baseammo += 1
+		"leaf_spell_3":
+			leaf_level = 3
+			leaf_attackspeed -= 0.5
+		"leaf_spell_4":
+			leaf_level = 4
+			leaf_baseammo += 1
+		"spear_1":
+			spear_level = 1
+			spear_ammo += 1
+		"spear_2":
+			spear_level = 2
+		"spear_3":
+			spear_level = 3
+		"spear_4":
+			spear_level = 4
+		"bota_1", "bota_2", "bota_3", "bota_4":
+			move_speed += 20.0
+		"ring_1", "ring_2":
+			additional_attacks += 1
+		"food":
+			hp += 10
+			hp = clamp(hp, 0, maxhp)
+	
+	attack()
+	
+	
 	var option_children = upgradeOptions.get_children()
 	for i in option_children:
 		i.queue_free()
-		
+	upgrade_options.clear()
+	collected_upgrades.append(upgrade)
 	levelPanel.visible = false
 	levelPanel.position = Vector2(800,50)
 	get_tree().paused = false
 	calculate_experience(0)
-	
+
+func get_random_item():
+	var dblist = []
+	for i in UpgradeDb.UPGRADES:
+		if i in collected_upgrades:
+			pass
+		elif i in upgrade_options:
+			pass
+		elif UpgradeDb.UPGRADES[i]["type"] == "item":
+			pass
+		elif UpgradeDb.UPGRADES[i]["prerequesite"].size() > 0:
+			var to_add = true
+			for n in UpgradeDb.UPGRADES[i]["prerequesite"]:
+				if not n in collected_upgrades:
+					to_add = false
+			if to_add:
+				dblist.append(i)
+		else:
+			dblist.append(i)
+	if dblist.size() > 0:
+		var randomitem = dblist.pick_random()
+		upgrade_options.append(randomitem)
+		return randomitem
+	else: 
+		return null

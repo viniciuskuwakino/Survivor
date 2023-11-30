@@ -29,18 +29,21 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("1_pyiv6")
 
 [node name="lbl_name" type="Label" parent="."]
-offset_left = 39.0
-offset_top = 1.0
-offset_right = 86.0
-offset_bottom = 27.0
+layout_mode = 0
+offset_left = 30.0
+offset_top = 2.0
+offset_right = 77.0
+offset_bottom = 28.0
+theme_override_font_sizes/font_size = 14
 text = "Name"
 
 [node name="lbl_description" type="Label" parent="."]
+layout_mode = 0
 offset_left = 4.0
 offset_top = 27.0
 offset_right = 166.0
 offset_bottom = 48.0
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 text = "Description of item"
 
 [node name="lbl_level" type="Label" parent="."]
