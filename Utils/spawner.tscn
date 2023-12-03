@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cpgmjuqbrwjbd"]
 
 [ext_resource type="Script" path="res://Utils/spawner.gd" id="1_ql1mx"]
-[ext_resource type="PackedScene" uid="uid://bvxtvgy2ooimi" path="res://Inimigos/inimigo_1.tscn" id="2_2n4vx"]
+[ext_resource type="PackedScene" uid="uid://bvxtvgy2ooimi" path="res://Inimigos/skeleton_w.tscn" id="2_2n4vx"]
 [ext_resource type="Script" path="res://Utils/spawn_info.gd" id="3_1akop"]
 
 [sub_resource type="Resource" id="Resource_oj3vk"]
