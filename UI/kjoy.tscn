@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://dnfm6v3sm4wx7"]
+
+[ext_resource type="Texture2D" uid="uid://c11rjmcryh5jy" path="res://UI/MobileInput/Textures/base.png" id="1_1kjr8"]
+[ext_resource type="Texture2D" uid="uid://w4oq668axgry" path="res://UI/MobileInput/Textures/stick.png" id="2_78s1g"]
+[ext_resource type="Script" path="res://UI/kjoy.gd" id="2_vpbjy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n6r6u"]
+radius = 65.0
+
+[node name="kjoy" type="TouchScreenButton"]
+position = Vector2(543, 264)
+scale = Vector2(0.7, 0.7)
+texture_normal = ExtResource("1_1kjr8")
+shape = SubResource("CircleShape2D_n6r6u")
+script = ExtResource("2_vpbjy")
+
+[node name="Knob" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.643137)
+position = Vector2(65, 63)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_78s1g")

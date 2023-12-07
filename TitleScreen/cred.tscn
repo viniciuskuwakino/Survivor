@@ -1,0 +1,95 @@
+[gd_scene load_steps=10 format=3 uid="uid://r53godoe5dad"]
+
+[ext_resource type="Script" path="res://TitleScreen/cred.gd" id="1_0yybm"]
+[ext_resource type="PackedScene" uid="uid://b3abptyd8oqvs" path="res://Utils/basic_button.tscn" id="1_t51k8"]
+[ext_resource type="Texture2D" uid="uid://bl8jb7lqophtf" path="res://Textures/GUI/logo.png" id="2_pssgc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hwnq8"]
+atlas = ExtResource("2_pssgc")
+region = Rect2(0, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1463"]
+atlas = ExtResource("2_pssgc")
+region = Rect2(80, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5w1q"]
+atlas = ExtResource("2_pssgc")
+region = Rect2(160, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxhf5"]
+atlas = ExtResource("2_pssgc")
+region = Rect2(240, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gc53y"]
+atlas = ExtResource("2_pssgc")
+region = Rect2(320, 0, 80, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ydheg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwnq8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1463")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p5w1q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxhf5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gc53y")
+}],
+"loop": true,
+"name": &"anim",
+"speed": 5.0
+}]
+
+[node name="Cred" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0yybm")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(15.9747, 8.98375)
+color = Color(0.129412, 0.129412, 0.129412, 0.776471)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 16.0
+offset_right = 640.0
+offset_bottom = 296.0
+theme_override_font_sizes/font_size = 24
+text = "Arte & Código:
+Vinicius Kuwakino
+Lucas Henrique Malaquias da Silva Donadi
+
+Música e Efeitos:
+itch.io
+"
+
+[node name="btn_return" parent="." instance=ExtResource("1_t51k8")]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 300.0
+offset_right = 371.0
+offset_bottom = 336.0
+text = "Voltar"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(467, 218)
+sprite_frames = SubResource("SpriteFrames_ydheg")
+animation = &"anim"
+
+[connection signal="click_end" from="btn_return" to="." method="_on_btn_return_click_end"]

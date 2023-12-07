@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+
+var acceleration = 123.0
+var _input_vector: Vector2
 var move_speed = 60.0
 var hp = 30
 var maxhp = 30
@@ -64,6 +67,12 @@ var enemy_close = []
 @onready var collectedUpgrades = get_node("%CollectedUpgrades")
 @onready var itemContainer = preload("res://Player/GUI/item_container.tscn")
 
+@onready var deathPanel = get_node("%DeathPanel")
+@onready var lblResult = get_node("%lbl_Result")
+@onready var sndVictory = get_node("%snd_win")
+@onready var sndLose = get_node("%snd_lose")
+
+
 func _ready():
 	upgrade_character("spell_1_1")
 	attack()
@@ -71,32 +80,62 @@ func _ready():
 	_on_hurtbox_hurt(0,0,0)
 
 func _physics_process(delta):
+	
+	##if OS.has_feature("mobile"):
+	#var direction = $CanvasLayer/kjoy.get_joystick_dir()
+	#velocity = direction * move_speed
+	#move_and_slide()
+	##else:
 	move()
+		
 	
 func move():
-	var x = Input.get_action_strength("right") - Input.get_action_strength("left")
-	var y = Input.get_action_strength("down") - Input.get_action_strength("up")
-	var mov = Vector2(x, y)
 	
-	# Adicionando animacao
-	if mov.x > 0:
-		sprite.flip_h = true
-	elif mov.x < 0:
-		sprite.flip_h = false
-	
-	if mov != Vector2.ZERO:
-		last_movement = mov
-		if walkTimer.is_stopped():
-			if sprite.frame >= sprite.hframes - 1:
-				sprite.frame = 0
-			else:
-				sprite.frame += 1
-			
-			walkTimer.start()
-			
-	
-	velocity = mov.normalized() * move_speed
-	move_and_slide()
+	if OS.has_feature("mobile"):
+		var mov = $CanvasLayer/kjoy.get_joystick_dir()
+		
+		if mov.x > 0:
+			sprite.flip_h = true
+		elif mov.x < 0:
+			sprite.flip_h = false
+		
+		if mov != Vector2.ZERO:
+			last_movement = mov
+			if walkTimer.is_stopped():
+				if sprite.frame >= sprite.hframes - 1:
+					sprite.frame = 0
+				else:
+					sprite.frame += 1
+				
+				walkTimer.start()
+				
+		
+		velocity = mov.normalized() * move_speed
+		move_and_slide()
+	else:
+		var x = Input.get_action_strength("right") - Input.get_action_strength("left")
+		var y = Input.get_action_strength("down") - Input.get_action_strength("up")
+		var mov = Vector2(x, y)
+		
+		# Adicionando animacao
+		if mov.x > 0:
+			sprite.flip_h = true
+		elif mov.x < 0:
+			sprite.flip_h = false
+		
+		if mov != Vector2.ZERO:
+			last_movement = mov
+			if walkTimer.is_stopped():
+				if sprite.frame >= sprite.hframes - 1:
+					sprite.frame = 0
+				else:
+					sprite.frame += 1
+				
+				walkTimer.start()
+				
+		
+		velocity = mov.normalized() * move_speed
+		move_and_slide()
 
 
 func attack():
@@ -118,6 +157,8 @@ func _on_hurtbox_hurt(damage, _angle, _knockback):
 	hp -= damage
 	healthBar.max_value = maxhp
 	healthBar.value = hp
+	if hp <= 0:
+		death()
 
 
 func _on_spell_1_timer_timeout():
@@ -357,7 +398,24 @@ func adjust_gui_collection(upgrade):
 				"upgrade":
 					collectedUpgrades.add_child(new_item)
 					
+
+func death():
+	deathPanel.visible = true
+	get_tree().paused = true
+	var tween = deathPanel.create_tween()
+	tween.tween_property(deathPanel, "position", Vector2(220,50),3.0).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	tween.play()
+	if time >= 300:
+		lblResult.text = "You Win"
+		sndVictory.play()
+	else:
+		lblResult.text = "You Lose"
+		sndLose.play()
+		
 	
 	
-	
-	
+
+
+func _on_btn_menu_click_end():
+	get_tree().paused = false
+	var _level = get_tree().change_scene_to_file("res://TitleScreen/menu.tscn")

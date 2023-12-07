@@ -1,0 +1,120 @@
+[gd_scene load_steps=10 format=3 uid="uid://bpu2dkts64ctn"]
+
+[ext_resource type="PackedScene" uid="uid://b3abptyd8oqvs" path="res://Utils/basic_button.tscn" id="1_0tipw"]
+[ext_resource type="Script" path="res://TitleScreen/menu.gd" id="1_dghs1"]
+[ext_resource type="Texture2D" uid="uid://bl8jb7lqophtf" path="res://Textures/GUI/logo.png" id="3_5uwsk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hwnq8"]
+atlas = ExtResource("3_5uwsk")
+region = Rect2(0, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1463"]
+atlas = ExtResource("3_5uwsk")
+region = Rect2(80, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5w1q"]
+atlas = ExtResource("3_5uwsk")
+region = Rect2(160, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxhf5"]
+atlas = ExtResource("3_5uwsk")
+region = Rect2(240, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gc53y"]
+atlas = ExtResource("3_5uwsk")
+region = Rect2(320, 0, 80, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_85gcf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwnq8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1463")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p5w1q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxhf5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gc53y")
+}],
+"loop": true,
+"name": &"anim",
+"speed": 5.0
+}]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -260.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dghs1")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(15.9747, 8.98375)
+color = Color(0.129412, 0.129412, 0.129412, 0.776471)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 100.0
+theme_override_font_sizes/font_size = 32
+text = "Survivor"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="btn_cred" parent="." instance=ExtResource("1_0tipw")]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 250.0
+offset_right = 491.0
+offset_bottom = 286.0
+text = "Créditos
+"
+
+[node name="btn_tuto" parent="." instance=ExtResource("1_0tipw")]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 250.0
+offset_right = 250.0
+offset_bottom = 286.0
+text = "Instruções"
+
+[node name="btn_play" parent="." instance=ExtResource("1_0tipw")]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 250.0
+offset_right = 371.0
+offset_bottom = 286.0
+text = "Iniciar
+"
+
+[node name="btn_exit" parent="." instance=ExtResource("1_0tipw")]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 300.0
+offset_right = 371.0
+offset_bottom = 336.0
+text = "Sair"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(324, 153)
+sprite_frames = SubResource("SpriteFrames_85gcf")
+animation = &"anim"
+frame_progress = 0.161283
+
+[connection signal="click_end" from="btn_cred" to="." method="_on_btn_cred_click_end"]
+[connection signal="click_end" from="btn_tuto" to="." method="_on_btn_tuto_click_end"]
+[connection signal="click_end" from="btn_play" to="." method="_on_btn_play_click_end"]
+[connection signal="click_end" from="btn_exit" to="." method="_on_btn_exit_click_end"]
