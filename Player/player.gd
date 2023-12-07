@@ -80,15 +80,9 @@ func _ready():
 	_on_hurtbox_hurt(0,0,0)
 
 func _physics_process(delta):
-	
-	##if OS.has_feature("mobile"):
-	#var direction = $CanvasLayer/kjoy.get_joystick_dir()
-	#velocity = direction * move_speed
-	#move_and_slide()
-	##else:
 	move()
-		
 	
+
 func move():
 	
 	if OS.has_feature("mobile"):
@@ -154,7 +148,7 @@ func attack():
 
 
 func _on_hurtbox_hurt(damage, _angle, _knockback):
-	hp -= damage
+	hp -= clamp(damage, 1.0, 999.0)
 	healthBar.max_value = maxhp
 	healthBar.value = hp
 	if hp <= 0:
@@ -330,9 +324,10 @@ func upgrade_character(upgrade):
 		"ring_1", "ring_2":
 			additional_attacks += 1
 		"food":
-			hp += 10
+			hp += 20
 			hp = clamp(hp, 0, maxhp)
-	
+			healthBar.value = hp
+			
 	adjust_gui_collection(upgrade)
 	attack()
 	var option_children = upgradeOptions.get_children()
@@ -399,13 +394,13 @@ func adjust_gui_collection(upgrade):
 					collectedUpgrades.add_child(new_item)
 					
 
-func death():
+func death(is_boss_defeated=false):
 	deathPanel.visible = true
 	get_tree().paused = true
 	var tween = deathPanel.create_tween()
 	tween.tween_property(deathPanel, "position", Vector2(220,50),3.0).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 	tween.play()
-	if time >= 300:
+	if is_boss_defeated:
 		lblResult.text = "You Win"
 		sndVictory.play()
 	else:

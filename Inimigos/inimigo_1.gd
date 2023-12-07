@@ -55,6 +55,10 @@ func _on_hurtbox_hurt(damage, angle, knockback_amount):
 	hp -= damage
 	knockback = angle * knockback_amount
 	if hp <= 0:
+		var enemy_death = get_node(".")
 		death()
+		if enemy_death.name == "boss":
+			player.death(true)
+		#end_game()
 	else:
 		snd_hit.play()
