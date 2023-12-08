@@ -21,27 +21,38 @@ func _ready():
 	itemIcon.texture = load(UpgradeDb.UPGRADES[item]["icon"])
 
 func _input(event):
+	pass
+	#print(event is InputEventScreenTouch)
+	##print(event.is_pressed())
+	#if event.is_pressed():
+		#print(item)
+	
+	#if event is InputEventScreenTouch and event.is_pressed():
+		#print("Clicou")
+	
+	#if event.is_action("click"):
+		##print("ITEM: " + item)
+		##if item:
+			##print(item)
+		#if mouse_over:
+			#print("ITEM: " + item)
+			#emit_signal("selected_upgrade", item)
+	
+
+#
+#func _on_mouse_entered():
+	#mouse_over = true
+#
+#
+#func _on_mouse_exited():
+	#mouse_over = false
+	#
+
+
+
+
+
+func _on_gui_input(event):
 	if event.is_action("click"):
-		if mouse_over:
-			if item:
-				emit_signal("selected_upgrade", item)
-	
-
-
-func _on_mouse_entered():
-	mouse_over = true
-
-
-func _on_mouse_exited():
-	mouse_over = false
-	
-
-
-
-
-
-
-
-
-
-
+		#print(item)
+		emit_signal("selected_upgrade", item)
