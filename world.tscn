@@ -119,4 +119,4 @@ spawns = Array[ExtResource("6_smivn")]([SubResource("Resource_oad4p"), SubResour
 
 [node name="ExperienceGem" parent="." instance=ExtResource("4_tde7x")]
 position = Vector2(61, -53)
-experience = 100
+experience = 5

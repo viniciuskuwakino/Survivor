@@ -16,7 +16,6 @@ func _ready():
 	if OS.has_feature("mobile"):
 		is_mobile = true
 		
-		
 	connect("selected_upgrade", Callable(player,"upgrade_character"))
 	if item == null:
 		item = "food"
@@ -29,21 +28,7 @@ func _input(event):
 	if is_mobile == false:
 		if event.is_pressed():
 			if mouse_over:
-				print("ITEM: " + item)
 				emit_signal("selected_upgrade", item)
-	#print(event is InputEventScreenTouch)
-	##print(event.is_pressed())
-	#if event.is_pressed():
-		#print(item)
-	
-	#if event is InputEventScreenTouch and event.is_pressed():
-		#print("Clicou")
-	
-	#if event.is_action("click"):
-		##print("ITEM: " + item)
-		##if item:
-			##print(item)
-	
 
 
 func _on_mouse_entered():
